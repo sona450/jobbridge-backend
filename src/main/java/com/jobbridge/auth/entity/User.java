@@ -18,8 +18,12 @@ public class User {
 
     @Column(unique = true)
     private String email;
-
     private String password;
-
     private String role;
+    private String phone;
+    private String location;
+    private String skills;
+    private Integer experienceYears;
+    @Column(length = 1000)
+    private String bio;
 }
