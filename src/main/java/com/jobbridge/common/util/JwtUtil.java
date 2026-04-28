@@ -15,6 +15,24 @@ public class JwtUtil {
     private static final SecretKey KEY =
             Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
+    public static String extractEmail(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public static boolean validate(String token) {
+        try {
+            extractEmail(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public static String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
