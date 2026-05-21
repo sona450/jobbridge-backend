@@ -21,7 +21,8 @@ public class JobApplication {
     @JoinColumn(name = "job_id")
     private Job job;
 
-    private String status; // APPLIED, REVIEWED, REJECTED, HIRED
+    @Enumerated(EnumType.STRING)
+    private ApplicationStatus status;
 
     private LocalDateTime appliedAt;
 }

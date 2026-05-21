@@ -1,5 +1,6 @@
 package com.jobbridge.application.service;
 
+import com.jobbridge.application.entity.ApplicationStatus;
 import com.jobbridge.application.entity.JobApplication;
 import com.jobbridge.application.repository.JobApplicationRepository;
 import com.jobbridge.jobs.entity.Job;
@@ -35,8 +36,17 @@ public class ApplicationService {
         JobApplication app = new JobApplication();
         app.setApplicantEmail(email);
         app.setJob(job);
-        app.setStatus("APPLIED");
+        app.setStatus(ApplicationStatus.APPLIED);
         app.setAppliedAt(LocalDateTime.now());
+
+        return repo.save(app);
+    }
+    public JobApplication updateStatus(Long id, String status) {
+
+        JobApplication app = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Application not found"));
+
+        app.setStatus(ApplicationStatus.valueOf(status));
 
         return repo.save(app);
     }

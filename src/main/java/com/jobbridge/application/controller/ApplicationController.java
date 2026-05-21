@@ -33,4 +33,10 @@ public class ApplicationController {
             @PathVariable Long jobId) {
         return service.applicants(jobId);
     }
+
+    @PutMapping("/{id}/status")
+    public JobApplication updateStatus(@PathVariable Long id,
+                                       @RequestParam String status) {
+        return service.updateStatus(id, status);
+    }
 }
