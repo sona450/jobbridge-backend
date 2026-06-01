@@ -3,6 +3,9 @@ package com.jobbridge.jobs.service;
 import com.jobbridge.jobs.dto.JobRequest;
 import com.jobbridge.jobs.entity.Job;
 import com.jobbridge.jobs.repository.JobRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +47,21 @@ public class JobService {
 
     public void delete(Long id) {
         repo.deleteById(id);
+    }
+
+    public Page<Job> searchJobs(
+            String keyword,
+            String location,
+            int page,
+            int size
+    ) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return repo.findByTitleContainingIgnoreCaseAndLocationContainingIgnoreCase(
+                keyword,
+                location,
+                pageable
+        );
     }
 }

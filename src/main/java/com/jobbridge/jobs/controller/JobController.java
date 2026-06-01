@@ -3,6 +3,7 @@ package com.jobbridge.jobs.controller;
 import com.jobbridge.jobs.dto.JobRequest;
 import com.jobbridge.jobs.entity.Job;
 import com.jobbridge.jobs.service.JobService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +39,15 @@ public class JobController {
     public String delete(@PathVariable Long id) {
         service.delete(id);
         return "Job deleted";
+    }
+    @GetMapping("/search")
+    public Page<Job> searchJobs(
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "") String location,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+
+        return service.searchJobs(keyword, location, page, size);
     }
 }
